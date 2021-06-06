@@ -6,7 +6,7 @@
         >
             <v-card>
                 <v-card-title>
-                    <span class="headline">新增待办任务</span>
+                    <span class="headline">CREATE A TODO TASK</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -17,7 +17,7 @@
                                     md="4"
                             >
                                 <v-text-field
-                                        label="任务标题*"
+                                        label="TASK-TITLE*"
                                         v-model="addForm.title"
                                         required
                                 ></v-text-field>
@@ -30,7 +30,7 @@
                                     md="4"
                             >
                                 <v-text-field
-                                        label="任务详情*"
+                                        label="TASK-DESCRIPTION*"
                                         v-model="addForm.description"
                                 ></v-text-field>
                             </v-col>
@@ -46,14 +46,14 @@
                                         :items="tags"
                                         chips item-text="name"
                                         :item-value="getItemValue"
-                                        label="Tags"
+                                        label="TAGS"
                                         multiple
                                         outlined
                                 ></v-select>
                             </v-col>
                         </v-row>
                     </v-container>
-                    <small>*表示必填哦</small>
+                    <small>*NESSARY</small>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>

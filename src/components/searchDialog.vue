@@ -4,11 +4,12 @@
             content-class="grey darken-3"
             v-model="dialogVisible"
             transition="dialog-top-transition"
-            max-width="300"
+            max-width="400"
     >
         <v-text-field
                 v-model="searchContent"
                 autofocus clearable
+                placeholder="SEARCH BY TASK'S TITLE OR DESCRIPTION"
                 class="white--text px-2" style="color: #fff">
             <v-icon
                     slot="append"
@@ -57,5 +58,10 @@
     /deep/
     input {
         color: #fff !important;
+    }
+
+    /deep/
+    input::placeholder {
+        color: rgba(238, 238, 238, .5) !important;
     }
 </style>

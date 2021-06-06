@@ -10,14 +10,15 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 protocol.registerSchemesAsPrivileged([
     {scheme: 'app', privileges: {secure: true, standard: true}}
 ])
-console.log(process.env.NODE_ENV)
+
 
 async function createWindow() {
     // Create the browser window.
     const win = new BrowserWindow({
         width: 800,
         height: 600,
-        // frame: false,
+        frame: !isDevelopment ? false : true, //取消window自带的关闭最小化等
+        resizable: false, //禁止改变主窗口尺寸
         webPreferences: {
 
             // Use pluginOptions.nodeIntegration, leave this alone

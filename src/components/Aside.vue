@@ -33,6 +33,7 @@
         data() {
             return {
                 items: [
+                    {title: '首页', icon: 'mdi-home-outline', flag: 'home'},
                     {title: '新增任务', icon: 'mdi-plus', flag: 'add'},
                     {title: '搜索任务', icon: 'mdi-magnify', flag: 'search'},
                     {title: '标签', icon: 'mdi-tag', flag: 'tag'},
@@ -44,11 +45,16 @@
         },
         methods: {
             onclick_asideMenu(flag) {
-                this.$emit('onclick_asideMenu', flag)
                 if (flag == 'timeline') {
                     this.$router.push({
                         path: "/timeline"
                     })
+                } else if (flag == 'home') {
+                    this.$router.push({
+                        path: "/home"
+                    })
+                } else {
+                    this.$emit('onclick_asideMenu', flag)
                 }
 
             }
