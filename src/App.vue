@@ -18,8 +18,6 @@
   import Aside from "./components/Aside";
   import firstUse from "./components/firstUse";
   import {ipcRenderer} from "electron"
-  import {getTags} from "./dataStore"
-  import {mapActions} from "vuex"
 
   export default {
     name: 'App',
@@ -45,13 +43,10 @@
       },
       filePath() {
         return localStorage.getItem('filePath')
-
       }
     },
     methods: {
-      ...mapActions([
-        'setTags'
-      ]),
+
       onclick_asideMenu(flag) {
         this.dialogFlag = flag;
         this.visible = true;
@@ -63,20 +58,7 @@
         this.visible = val
       }
     },
-    async created() {
-      const tags = await getTags();
-      this.setTags(tags)
-    },
-
     mounted() {
-      if (localStorage.getItem('filePath')) {
-        if (this.$route.path !== '/home') {
-          this.$router.push({
-            path: "/home"
-          })
-        }
-      }
-
       //监听网络变化
       window.addEventListener("online", function () {
         console.log("有网络了");

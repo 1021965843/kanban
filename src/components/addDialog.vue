@@ -79,7 +79,7 @@
 <script>
     const fs = require("fs")
     const path = require("path")
-    import {writeJson, search} from "../dataStore";
+    import {writeJson, search} from "../../dataStore";
     import {mapActions, mapGetters} from "vuex"
 
     export default {

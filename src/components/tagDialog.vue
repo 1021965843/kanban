@@ -55,7 +55,7 @@
 
 <script>
     import colorPicker from "./colorPicker";
-    import {setTags as setTagsConfig} from "../dataStore"
+    import {setTags as setTagsConfig} from "../../dataStore"
     import {mapGetters, mapActions} from "vuex"
 
     export default {
@@ -68,7 +68,6 @@
                 dialogVisible: this.visible,
                 color: '',
                 tagName: '',
-
             }
         },
         props: {

@@ -16,20 +16,12 @@ ipcMain.on('window-close', () => {
 })
 
 ipcMain.on('open-directory-dialog', function (event, p) {
-    console.log(p)
-    /* dialog.showOpenDialog({
-         properties: [p]
-     }, function (files) {
-         if (files) {// 如果有选中
-             // 发送选择的对象给子进程
-             console.log(files[0])
-
-             event.sender.send('selectedItem', files[0])
-         }
-     })*/
     dialog.showOpenDialog(win, {
         properties: [p]
     }).then(res => {
         event.sender.send('selectedItem', res.filePaths[0])
+    }).catch(err => {
+        event.sender.send('openDialogError', err)
+        console.log(err)
     })
 });

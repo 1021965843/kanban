@@ -182,15 +182,15 @@
 
 <script>
     import {mapGetters, mapActions} from "vuex"
-    import {search, update} from "../dataStore";
+    import {getTags, search, update} from "../../dataStore";
     import draggable from "vuedraggable"
+
 
     export default {
         name: 'Home',
         components: {draggable},
         data() {
             return {
-                taskList: [],
                 winHeight: document.documentElement.clientHeight,
                 deleteDialog: false,
                 removeInfo: {}
@@ -231,13 +231,16 @@
                 })
             },
         },
-        created() {
+        async created() {
             this.gettoDoList();
             this.getdoneList();
+            const tags = await getTags();
+            this.setTags(tags)
         },
         methods: {
             ...mapActions([
                 "addCount",
+                'setTags'
             ]),
             async gettoDoList() {
                 const {data} = await search('todo');

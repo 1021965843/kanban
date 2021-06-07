@@ -32,6 +32,9 @@
     import {mapActions} from "vuex"
     import {ipcRenderer} from "electron"
 
+    const {dialog} = require('electron')
+    console.log(dialog)
+
     export default {
         name: "FolderSelect",
         props: {
@@ -60,6 +63,9 @@
             openDialog() {
                 ipcRenderer.send('open-directory-dialog', 'openDirectory');
                 ipcRenderer.on('selectedItem', this.getPath);
+                ipcRenderer.on('openDialogError', (err) => {
+                    console.log(err)
+                });
             },
             getPath(e, dbpath) {
                 console.log(e, dbpath)
@@ -70,14 +76,16 @@
                     },
                     "done": {
                         "data": []
+                    },
+                    "config": {
+                        "tags": []
                     }
                 }
-                console.log(this.folder)
                 this.setfilePath(this.folder)
-                console.log(this.$store.state.todoList.filePath)
                 localStorage.setItem("filePath",this.folder)
                 fs.writeFileSync(this.folder, JSON.stringify(emptyDb))
                 this.$forceUpdate()
+                this.$emit('checkFolderExists', fs.existsSync(this.folder))
             }
         },
 

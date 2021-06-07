@@ -1,17 +1,17 @@
 (function () {
-    var path = require("path");
+    const path = require("path");
     const {app, Menu, BrowserWindow, Tray} = require("electron");
 
 //创建系统托盘
 
-// var tray = new Tray(path.join(__dirname,'../favicon.ico'));
+// const tray = new Tray(path.join(__dirname,'../favicon.ico'));
 
-//var tray = new Tray(path.join(__static,'favicon.ico'));
-    var tray = new Tray(path.resolve(__dirname, "../src/assets/kanban.png"));
+//const tray = new Tray(path.join(__static,'favicon.ico'));
+    const tray = new Tray(path.resolve(__dirname, "../src/assets/kanban.png"));
 
 //给托盘增加右键菜单
 
-    var template = [
+    const template = [
         {
             label: "设置",
             click: function () {
@@ -43,7 +43,7 @@
 
 //监听关闭事件隐藏到系统托盘
 
-    var win = BrowserWindow.getFocusedWindow();
+    let win = BrowserWindow.getFocusedWindow();
 
     win.on("close", (e) => {
         if (!win.isFocused()) {
