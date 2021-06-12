@@ -43,7 +43,7 @@
 
 //监听关闭事件隐藏到系统托盘
 
-    let win = BrowserWindow.getFocusedWindow();
+    let win = BrowserWindow.getFocusedWindow() || BrowserWindow.getFocusedWindow()[0];
 
     win.on("close", (e) => {
         if (!win.isFocused()) {

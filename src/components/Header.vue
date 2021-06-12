@@ -29,21 +29,35 @@
 </template>
 
 <script>
-    import {ipcRenderer} from "electron"
+    import {ipcRenderer, remote} from "electron"
 
+    let win = remote.getCurrentWindow() || remote.getCurrentWindow()[0]
     export default {
         data() {
             return {};
         },
         methods: {
             min() {
-                ipcRenderer.send("window-min");
+                // ipcRenderer.send("window-min");
+                win.minimize()
             },
             max() {
-                ipcRenderer.send("window-max");
+                // ipcRenderer.send("window-max");
+                if (win.isMaximized()) {
+                    win.restore()
+                } else {
+                    win.maximize()
+                }
             },
             close() {
-                ipcRenderer.send("window-close");
+                // ipcRenderer.send("window-close");
+                win.close()
+                /*if (!win.isFocused()) {
+                    win = null;
+                } else {
+                    e.preventDefault(); /!*阻止应用退出*!/
+                    win.hide(); /!*隐藏当前窗口*!/
+                }*/
             },
         },
     };
@@ -54,7 +68,8 @@
         width: 100%;
         height: 40px;
         line-height: 40px;
-        -webkit-app-region: drag;
+        /*-webkit-app-region: drag;*/
+        // 会导致自定义最大化、最小化、关闭按钮点击没反应，假死状态
     }
 
     .v-icon.v-icon::after {

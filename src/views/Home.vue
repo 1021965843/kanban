@@ -5,19 +5,19 @@
                 <div class="text-center title font-weight-bold">TODOLIST</div>
                 <draggable
                         class="scroll-con"
-                        :style="{'height':winHeight+'px'}"
+                        :style="{'height':(winHeight-80)+'px'}"
                         group="notes" @change="log"
                         :list="toDoList"
                 >
                     <v-card
-                            height="120"
+                            min-height="120"
                             class="todonote mb-2"
                             v-for="item in toDoList"
                     >
                         <div class="pa-2 d-flex justify-space-between">
-                            <span>{{item.title}}</span>
+                            <span class="note-title">{{item.title}}</span>
                             <div>
-                                <v-icon>mdi-pencil-outline</v-icon>
+                                <!--                                <v-icon>mdi-pencil-outline</v-icon>-->
                                 <v-icon class="ml-2"
                                         @click="removeNote('todo',item.title,item.id)">
                                     mdi-trash-can-outline
@@ -26,6 +26,7 @@
                         </div>
                         <v-divider></v-divider>
                         <div class="pa-2">
+                            <div class="note-date">创建于{{item.create_time|dateFormat}}</div>
                             <v-chip class="mx-1"
                                     v-for="tag in item.tag"
                                     label x-small
@@ -34,7 +35,7 @@
                             >
                                 {{tag.name}}
                             </v-chip>
-                            <div>
+                            <div class="note-desc">
                                 {{item.description}}
                             </div>
                         </div>
@@ -46,23 +47,24 @@
                 <div class="text-center title font-weight-bold">DONELIST</div>
                 <draggable
                         class="scroll-con"
-                        :style="{'height':winHeight+'px'}"
+                        :style="{'height':(winHeight-80)+'px'}"
                         :list="doneList" group="notes" @change="log"
                 >
                     <v-card
-                            height="120"
+                            min-height="120"
                             class="donenote mb-2"
                             v-for="item in doneList"
                     >
                         <div class="pa-2 d-flex justify-space-between">
-                            <span>{{item.title}}</span>
+                            <span class="note-title">{{item.title}}</span>
                             <div>
-                                <v-icon>mdi-pencil-outline</v-icon>
+                                <!--                                <v-icon>mdi-pencil-outline</v-icon>-->
                                 <v-icon @click="removeNote('done',item.title,item.id)">mdi-trash-can-outline</v-icon>
                             </div>
                         </div>
                         <v-divider></v-divider>
                         <div class="pa-2">
+                            <div class="note-date">创建于{{item.create_time|dateFormat}}</div>
                             <v-chip class="mx-1"
                                     v-for="tag in item.tag"
                                     label x-small
@@ -71,7 +73,7 @@
                             >
                                 {{tag.name}}
                             </v-chip>
-                            <div>
+                            <div class="note-desc">
                                 {{item.description}}
                             </div>
                         </div>
@@ -86,18 +88,19 @@
                 <div class="text-center title font-weight-bold">TODOLIST</div>
                 <draggable
                         class="scroll-con"
-                        :style="{'height':winHeight+'px'}"
+                        :style="{'height':(winHeight-80)+'px'}"
                         group="notesFilter"
                         :list="toDoListFilter"
                 >
                     <v-card
-                            height="120"
+                            min-height="120"
                             class="todonote mb-2"
                             v-for="item in toDoListFilter"
                     >
-                        <div class="pa-2">{{item.title}}</div>
+                        <div class="pa-2 note-title">{{item.title}}</div>
                         <v-divider></v-divider>
                         <div class="pa-2">
+                            <div class="note-date">创建于{{item.create_time|dateFormat}}</div>
                             <v-chip class="mx-1"
                                     v-for="tag in item.tag"
                                     label x-small
@@ -106,7 +109,7 @@
                             >
                                 {{tag.name}}
                             </v-chip>
-                            <div>
+                            <div class="note-desc">
                                 {{item.description}}
                             </div>
                         </div>
@@ -118,18 +121,19 @@
                 <div class="text-center title font-weight-bold">DONELIST</div>
                 <draggable
                         class="scroll-con"
-                        :style="{'height':winHeight+'px'}"
+                        :style="{'height':(winHeight-80)+'px'}"
                         :list="doneListFilter"
                         group="notesFilter"
                 >
                     <v-card
-                            height="120"
+                            min-height="120"
                             class="donenote mb-2"
                             v-for="item in doneListFilter"
                     >
-                        <div class="pa-2">{{item.title}}</div>
+                        <div class="pa-2 note-title">{{item.title}}</div>
                         <v-divider></v-divider>
                         <div class="pa-2">
+                            <div class="note-date">创建于{{item.create_time|dateFormat}}</div>
                             <v-chip class="mx-1"
                                     v-for="tag in item.tag"
                                     label x-small
@@ -138,7 +142,7 @@
                             >
                                 {{tag.name}}
                             </v-chip>
-                            <div>
+                            <div class="note-desc">
                                 {{item.description}}
                             </div>
                         </div>
@@ -282,12 +286,37 @@
 <style>
     .home {
         background-color: #eee;
+        font-size: 13px;
     }
 
     .scroll-con {
         /*padding: 40px 0;*/
+        width: 100%;
         scroll-padding: 40px 0;
         overflow-y: scroll;
         overflow-x: hidden;
+        -webkit-background-clip: text;
+
+    }
+
+    .note-title {
+        width: 80%;
+        font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /*.note-desc {
+        display: -webkit-box; !** 对象作为伸缩盒子模型显示 **!
+        word-break: break-all;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical; !** 设置或检索伸缩盒对象的子元素的排列方式 **!
+        -webkit-line-clamp: 2; !** 显示的行数 **!
+        overflow: hidden;
+    }*/
+    .note-date {
+        color: #757575;
+        font-size: 12px;
     }
 </style>

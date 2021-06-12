@@ -4,7 +4,7 @@
     <div class="d-flex">
       <Aside @onclick_asideMenu="onclick_asideMenu"></Aside>
       <!--    动态加载不同的dialog组件-->
-      <router-view style="flex: 1"/>
+      <router-view :style="{'width':(winWidth-60)+'px'}"/>
     </div>
 
     <firstUse v-if="!filePath"></firstUse>
@@ -24,6 +24,7 @@
     data() {
       return {
         winHeight: document.documentElement.clientHeight,
+        winWidth: document.documentElement.clientWidth,
         dialogFlag: '',
         visible: false
       }
@@ -59,6 +60,14 @@
       }
     },
     mounted() {
+      console.log(document.documentElement.clientWidth)
+      if (localStorage.getItem('filePath')) {
+        if (this.$route.path !== '/home') {
+          this.$router.push({
+            path: "/home"
+          })
+        }
+      }
       //监听网络变化
       window.addEventListener("online", function () {
         console.log("有网络了");
@@ -95,6 +104,7 @@
 <style>
   *::-webkit-scrollbar {
     display: none;
+    box-sizing: border-box;
   }
 
   .app {

@@ -36,7 +36,7 @@
                     {title: '首页', icon: 'mdi-home-outline', flag: 'home'},
                     {title: '新增任务', icon: 'mdi-plus', flag: 'add'},
                     {title: '搜索任务', icon: 'mdi-magnify', flag: 'search'},
-                    {title: '标签', icon: 'mdi-tag', flag: 'tag'},
+                    {title: '标签', icon: 'mdi-tag-outline', flag: 'tag'},
                     {title: '时间轴', icon: 'mdi-timeline-clock-outline', flag: 'timeline'},
                 ],
                 right: null,

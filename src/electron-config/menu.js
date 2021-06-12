@@ -1,7 +1,7 @@
 (function () {
     const {Menu, ipcMain, BrowserWindow} = require('electron')
     // 右键菜单
-    var win = BrowserWindow.getFocusedWindow();
+    var win = BrowserWindow.getFocusedWindow() || BrowserWindow.getFocusedWindow()[0];
     const contextMenutemplate = [
         {
             label: "复制",
@@ -23,7 +23,7 @@
     ]
     const contextMenu = Menu.buildFromTemplate(contextMenutemplate)
     ipcMain.on('contextmenu', function () {
-        contextMenu.popup(BrowserWindow.getFocusedWindow())
+        contextMenu.popup(win)
     })
 
 
