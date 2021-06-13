@@ -4,7 +4,9 @@
     <div class="d-flex">
       <Aside @onclick_asideMenu="onclick_asideMenu"></Aside>
       <!--    动态加载不同的dialog组件-->
-      <router-view :style="{'width':(winWidth-60)+'px'}"/>
+      <keep-alive include="weather">
+        <router-view :style="{'width':(winWidth-60)+'px'}"/>
+      </keep-alive>
     </div>
 
     <firstUse v-if="!filePath"></firstUse>

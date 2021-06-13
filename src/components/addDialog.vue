@@ -8,53 +8,36 @@
                 <v-card-title>
                     <span class="headline">CREATE A TODO TASK</span>
                 </v-card-title>
-                <v-card-text>
-                    <v-container>
-                        <v-row>
-                            <v-col
-                                    cols="24"
-                                    sm="6"
-                                    md="4"
-                            >
-                                <v-text-field
-                                        label="TASK-TITLE*"
-                                        v-model="addForm.title"
-                                        required
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col
-                                    cols="24"
-                                    sm="6"
-                                    md="4"
-                            >
-                                <v-text-field
-                                        label="TASK-DESCRIPTION*"
-                                        v-model="addForm.description"
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-col
-                                    cols="24"
-                                    sm="6"
-                                    md="4"
-                            >
-                                <v-select
-                                        v-model="addForm.tag"
-                                        :items="tags"
-                                        chips item-text="name"
-                                        :item-value="getItemValue"
-                                        label="TAGS"
-                                        multiple
-                                        outlined
-                                ></v-select>
-                            </v-col>
-                        </v-row>
-                    </v-container>
+                <v-form
+                        class="px-4"
+                        ref="addForm"
+                        v-model="valid"
+                        lazy-validation
+                >
+                    <v-text-field
+                            label="TASK-TITLE*"
+                            v-model="addForm.title"
+                            :rules="titleRules"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            label="TASK-DESCRIPTION*"
+                            v-model="addForm.description"
+                            :rules="descriptionRules"
+                            required
+                    ></v-text-field>
+                    <v-select
+                            v-model="addForm.tag"
+                            :items="tags"
+                            chips item-text="name"
+                            :item-value="getItemValue"
+                            label="TAGS"
+                            multiple
+                            outlined
+                    ></v-select>
                     <small>*NESSARY</small>
-                </v-card-text>
+                </v-form>
+
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
@@ -98,6 +81,14 @@
                     description: '',
                     tag: "",
                 },
+                valid: true,
+                titleRules: [
+                    v => !!v || 'Title is required',
+                    // v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+                ],
+                descriptionRules: [
+                    v => !!v || 'Description is required',
+                ],
 
             }
         },
@@ -108,12 +99,18 @@
         },
         watch: {
             dialogVisible(val) {
+                if (!val) {
+                    this.$refs.addForm.reset()
+                }
                 this.$emit('changeVisible', val)
             }
         },
         methods: {
             async onclick_save() {
-                console.log(this.addForm)
+                const isValid = this.$refs.addForm.validate()
+                if (!isValid) {
+                    return
+                }
                 this.addForm = Object.assign(this.addForm, {
                     id: new Date().getTime(),
                     create_time: new Date().getTime(),
@@ -121,10 +118,9 @@
                 })
                 let res = await writeJson(this.addForm)
                 console.log(res)
-                this.dialogVisible = false
                 const {data} = await search('todo');
-                console.log(data)
-                this.setToDoList(data)
+                this.setToDoList(data);
+                this.dialogVisible = false
             },
             ...mapActions([
                 'setToDoList'

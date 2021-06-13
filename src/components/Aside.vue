@@ -37,7 +37,8 @@
                     {title: '新增任务', icon: 'mdi-plus', flag: 'add'},
                     {title: '搜索任务', icon: 'mdi-magnify', flag: 'search'},
                     {title: '标签', icon: 'mdi-tag-outline', flag: 'tag'},
-                    {title: '时间轴', icon: 'mdi-timeline-clock-outline', flag: 'timeline'},
+                    {title: '导航', icon: 'mdi-link-variant', flag: 'navList'},
+                    {title: '天气', icon: 'mdi-weather-rainy', flag: 'weather'},
                 ],
                 right: null,
                 winHeight: document.documentElement.clientHeight
@@ -45,13 +46,17 @@
         },
         methods: {
             onclick_asideMenu(flag) {
-                if (flag == 'timeline') {
+                if (flag == 'navList') {
                     this.$router.push({
-                        path: "/timeline"
+                        path: "/navList"
                     })
                 } else if (flag == 'home') {
                     this.$router.push({
                         path: "/home"
+                    })
+                }else if (flag == 'weather') {
+                    this.$router.push({
+                        path: "/weather"
                     })
                 } else {
                     this.$emit('onclick_asideMenu', flag)

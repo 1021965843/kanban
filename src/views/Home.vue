@@ -2,7 +2,16 @@
     <div>
         <div class="home d-flex" v-if="!searchContent">
             <div style="width: 49%" class="pa-2">
-                <div class="text-center title font-weight-bold">TODOLIST</div>
+                <div class="text-center title font-weight-bold">
+                    <v-badge
+                            color="red"
+                            v-if="toDoList.length"
+                            :content="toDoList.length"
+                    >
+                        TODOLIST
+                    </v-badge>
+                    <span v-else>TODOLIST</span>
+                </div>
                 <draggable
                         class="scroll-con"
                         :style="{'height':(winHeight-80)+'px'}"
